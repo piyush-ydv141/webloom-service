@@ -1,10 +1,8 @@
 // --- LoomBot Logic ---
 let chatActive = false;
 const chatbotContainer = document.getElementById('chatbot');
-const chatToggleIcon = document.getElementById('chatToggleIcon');
 const chatBody = document.getElementById('chatBody');
 const chatInput = document.getElementById('chatInput');
-
 let messageCount = 0;
 
 // Toggle chatbot open/close
@@ -12,10 +10,9 @@ function toggleChat() {
     chatActive = !chatActive;
     if (chatActive) {
         chatbotContainer.classList.add('active');
-        chatToggleIcon.classList.replace('fa-chevron-up', 'fa-chevron-down');
+        chatInput.focus();
     } else {
         chatbotContainer.classList.remove('active');
-        chatToggleIcon.classList.replace('fa-chevron-down', 'fa-chevron-up');
     }
 }
 
@@ -26,37 +23,52 @@ function handleChatEnter(event) {
     }
 }
 
-// Handle sending and receiving messages
+// Handle Quick Chip Replies
+function sendQuickReply(option) {
+    if (option === 'Pricing') {
+        appendMessage('Tell me about your pricing plans.', 'user');
+        respondToBot('price');
+    } else if (option === 'Services') {
+        appendMessage('What services do you offer?', 'user');
+        respondToBot('service');
+    } else if (option === 'Contact') {
+        appendMessage('How can I contact you?', 'user');
+        respondToBot('contact');
+    }
+}
+
+// Handle sending user input
 function sendMessage() {
     const text = chatInput.value.trim();
     if (!text) return;
 
-    // 1. Add User Message to Chat
     appendMessage(text, 'user');
     chatInput.value = '';
+    respondToBot(text.toLowerCase());
+}
 
-    // 2. Bot Response Logic
+// LoomBot Auto Response Generator
+function respondToBot(input) {
     setTimeout(() => {
         messageCount++;
         let botReply = "";
 
-        const lowerText = text.toLowerCase();
-
-        // Basic keyword detection for attraction
-        if (lowerText.includes("price") || lowerText.includes("cost") || lowerText.includes("budget")) {
-            botReply = "Our pricing is tailored specifically for Indian small business budgets! It's highly affordable based on your exact needs.";
-        } else if (lowerText.includes("service") || lowerText.includes("build") || lowerText.includes("make")) {
-            botReply = "We specialize in Full-stack development, E-commerce platforms, and beautiful UI/UX designed to scale your business.";
+        if (input.includes("price") || input.includes("cost") || input.includes("plan")) {
+            botReply = "Our web plans start at just ₹4,999! We offer Starter, Business Scale, and Enterprise packages tailored for Indian businesses.";
+        } else if (input.includes("service") || input.includes("build") || input.includes("make")) {
+            botReply = "We build E-commerce stores, Hotel/Restaurant sites, Portfolios, and Custom Web Apps with modern UI/UX.";
+        } else if (input.includes("contact") || input.includes("phone") || input.includes("email")) {
+            botReply = "You can instantly message us on WhatsApp (+91 9506603393) or email official.h2ocean@gmail.com!";
         } else {
             if (messageCount === 1) {
-                botReply = "That sounds exciting! WebLoom is all about taking physical businesses and giving them a massive online presence.";
+                botReply = "That's great! WebLoom specializes in taking local businesses online and scaling them rapidly.";
             } else {
-                botReply = "I'm just a simple greeting assistant! 🤖 For custom quotes or technical discussions, please connect with our human experts directly on WhatsApp (+91 9506603393) or via email (official.h2ocean@gmail.com).";
+                botReply = "I am a greeting assistant! 🤖 For custom quotes, click WhatsApp (+91 9506603393) or email official.h2ocean@gmail.com to chat with our team directly.";
             }
         }
         
         appendMessage(botReply, 'bot');
-    }, 800);
+    }, 700);
 }
 
 // Helper function to render message bubbles
@@ -66,7 +78,7 @@ function appendMessage(text, sender) {
     msgDiv.innerText = text;
     chatBody.appendChild(msgDiv);
     
-    // Auto-scroll to the bottom of the chat
+    // Auto-scroll to bottom
     chatBody.scrollTop = chatBody.scrollHeight;
 }
 
@@ -83,7 +95,7 @@ document.getElementById('projectForm').addEventListener('submit', async (e) => {
 
     const formData = new FormData(e.target);
     
-    // YOUR LIVE ACCESS KEY ATTACHED
+    // Web3Forms Access Key
     formData.append("access_key", "ca1bb421-fde3-4c74-89f7-aa2974bcc833");
 
     try {
@@ -96,7 +108,7 @@ document.getElementById('projectForm').addEventListener('submit', async (e) => {
 
         if (result.success) {
             statusText.style.color = "green";
-            statusText.innerText = "Success! Project details sent to WebLoom. Our team will contact you shortly.";
+            statusText.innerText = "Success! Project details sent to official.h2ocean@gmail.com";
             e.target.reset();
         } else {
             throw new Error(result.message || "Web3Forms submission failed");
