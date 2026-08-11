@@ -1,0 +1,56 @@
+const express = require('express');
+const nodemailer = require('nodemailer');
+const path = require('path');
+require('dotenv').config();
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// Middleware to parse JSON and serve static frontend files
+app.use(express.json());
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Configure Nodemailer 
+// IMPORTANT: Use environment variables for production on GitHub
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: 'official.h2ocean@gmail.com',
+        pass: process.env.EMAIL_PASSWORD // DO NOT put actual password in GitHub. Use an App Password.
+    }
+});
+
+// API Route for the Contact Form
+app.post('/api/contact', async (req, res) => {
+    const { name, email, phone, reason, budget, details } = req.body;
+
+    const mailOptions = {
+        from: 'official.h2ocean@gmail.com', // Sent from your authenticated email
+        to: 'official.h2ocean@gmail.com',   // Sent TO yourself (service provider)
+        subject: `New WebLoom Client Inquiry from ${name}`,
+        html: `
+            <h2>New Client Project Inquiry</h2>
+            <p><strong>Client Name/Company:</strong> ${name}</p>
+            <p><strong>Email:</strong> ${email}</p>
+            <p><strong>Phone:</strong> ${phone}</p>
+            <p><strong>Reason for Website:</strong> ${reason}</p>
+            <p><strong>Estimated Budget:</strong> ${budget}</p>
+            <hr>
+            <h3>Project Details/Needs:</h3>
+            <p>${details}</p>
+        `
+    };
+
+    try {
+        await transporter.sendMail(mailOptions);
+        res.status(200).json({ message: 'Email sent successfully!' });
+    } catch (error) {
+        console.error('Error sending email:', error);
+        res.status(500).json({ error: 'Failed to send email' });
+    }
+});
+
+// Start the server
+app.listen(PORT, () => {
+    console.log(`WebLoom Server running on http://localhost:${PORT}`);
+});
