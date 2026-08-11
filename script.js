@@ -82,7 +82,9 @@ document.getElementById('projectForm').addEventListener('submit', async (e) => {
     statusText.innerText = '';
 
     const formData = new FormData(e.target);
-    formData.append("access_key", "YOUR_WEB3FORMS_ACCESS_KEY"); // Replace with your Web3Forms Key
+    
+    // YOUR LIVE ACCESS KEY ATTACHED
+    formData.append("access_key", "ca1bb421-fde3-4c74-89f7-aa2974bcc833");
 
     try {
         const response = await fetch("https://api.web3forms.com/submit", {
@@ -90,12 +92,14 @@ document.getElementById('projectForm').addEventListener('submit', async (e) => {
             body: formData
         });
 
-        if (response.ok) {
+        const result = await response.json();
+
+        if (result.success) {
             statusText.style.color = "green";
-            statusText.innerText = "Success! Project details sent to official.h2ocean@gmail.com";
+            statusText.innerText = "Success! Project details sent to WebLoom. Our team will contact you shortly.";
             e.target.reset();
         } else {
-            throw new Error("Web3Forms submission failed");
+            throw new Error(result.message || "Web3Forms submission failed");
         }
     } catch (error) {
         statusText.style.color = "red";
