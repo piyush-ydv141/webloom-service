@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebLoom Service Provider | Empowering Indian Businesses Online</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <header>
+        <div class="logo">
+            <i class="fas fa-network-wired"></i> WebLoom
+        </div>
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#services">Services</a>
+            <a href="#contact">Start a Project</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1 class="fade-in">Scale Your Business with a Powerful Digital Presence</h1>
+            <p class="fade-in delay">WebLoom provides premium web development services to help Indian small businesses transform into large enterprises online.</p>
+            <a href="#contact" class="btn primary-btn fade-in delay-2">Get Your Free Quote</a>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <h2>Why Choose WebLoom?</h2>
+        <div class="service-cards">
+            <div class="card slide-up">
+                <i class="fas fa-laptop-code"></i>
+                <h3>Full-Stack Development</h3>
+                <p>Custom, scalable, and secure websites built for your specific business needs.</p>
+            </div>
+            <div class="card slide-up delay">
+                <i class="fas fa-paint-brush"></i>
+                <h3>Stunning UI/UX</h3>
+                <p>Attractive, user-friendly designs that convert visitors into loyal customers.</p>
+            </div>
+            <div class="card slide-up delay-2">
+                <i class="fas fa-chart-line"></i>
+                <h3>Business Scaling</h3>
+                <p>We don't just build websites; we build digital growth engines for the Indian market.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form Section -->
+    <section id="contact" class="contact">
+        <h2>Let's Build Something Great</h2>
+        <p>Tell us about your project, and we'll help you scale.</p>
+        <form id="projectForm" class="contact-form slide-up">
+            <input type="text" id="name" name="name" placeholder="Your Name / Company Name" required>
+            <input type="email" id="email" name="email" placeholder="Email Address" required>
+            <input type="tel" id="phone" name="phone" placeholder="Phone Number" required>
+            
+            <label for="reason">Why do you need this website?</label>
+            <select id="reason" name="reason" required>
+                <option value="Online Store (E-commerce)">Online Store (E-commerce)</option>
+                <option value="Business Portfolio/Informational">Business Portfolio/Informational</option>
+                <option value="Web Application/SaaS">Web Application / Custom Software</option>
+                <option value="Other">Other</option>
+            </select>
+
+            <label for="budget">Estimated Budget (INR)</label>
+            <select id="budget" name="budget" required>
+                <option value="Under ₹10,000">Under ₹10,000</option>
+                <option value="₹10,000 - ₹30,000">₹10,000 - ₹30,000</option>
+                <option value="₹30,000 - ₹1,00,000">₹30,000 - ₹1,00,000</option>
+                <option value="Above ₹1,00,000">Above ₹1,00,000</option>
+            </select>
+
+            <textarea id="details" name="details" rows="5" placeholder="Please describe your exact needs and features required..." required></textarea>
+            
+            <button type="submit" class="btn primary-btn w-100">Submit Project Details</button>
+            <p id="formStatus"></p>
+        </form>
+    </section>
+
+    <!-- Floating Contact Buttons -->
+    <div class="floating-contacts">
+        <!-- FIXED: Added rel="noopener noreferrer" -->
+        <a href="https://wa.me/919506603393" target="_blank" rel="noopener noreferrer" class="float-btn whatsapp" title="WhatsApp Us">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+        <a href="mailto:official.h2ocean@gmail.com" class="float-btn email" title="Email Us">
+            <i class="fas fa-envelope"></i>
+        </a>
+    </div>
+
+    <!-- LoomBot Chatbot -->
+    <div class="chatbot-container" id="chatbot">
+        <div class="chat-header" onclick="toggleChat()">
+            <i class="fas fa-robot"></i> LoomBot Assistant
+            <i class="fas fa-chevron-up" id="chatToggleIcon"></i>
+        </div>
+        <div class="chat-body" id="chatBody">
+            <div class="message bot">Hello! I'm LoomBot. How can I help you scale your business today?</div>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="chatInput" placeholder="Type a message..." onkeypress="handleChatEnter(event)">
+            <!-- FIXED: Added aria-label and title attributes -->
+            <button onclick="sendMessage()" aria-label="Send message" title="Send message">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 WebLoom Service Provider. All Rights Reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
